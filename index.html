@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                line-height: 1.5;
+                font-family: sans-serif;
+            }
+
+            .imgs {
+                display: flex;
+                flex-direction: column;
+                padding: 16px;
+                gap: 16px;
+                background-color: antiquewhite;
+            }
+
+            .imgs > img {
+                border-radius: 16px;
+                border: 1px solid gold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="imgs"></div>
+        <script>
+            console.log("a");
+            const app = {
+                init() {
+                    console.log("c");
+                    Element.prototype.qs = Element.prototype.querySelector;
+                    Element.prototype.qsa = Element.prototype.querySelectorAll;
+                    window.dqs = (e) => document.querySelector(e);
+                    window.dqsa = (e) => document.querySelectorAll(e);
+                    app.loadImg();
+                },
+                loadImg() {
+                    console.log(4);
+                    for (i = 1; i <= 37; i++) {
+                        console.log(i);
+                        dqs(".imgs").insertAdjacentHTML(
+                            "beforeend",
+                            `<img src="/img/img-${i}.jpeg" />`
+                        );
+                    }
+                },
+            };
+
+            document.addEventListener("DOMContentLoaded", (e) => {
+                console.log("b");
+                app.init();
+            });
+        </script>
+    </body>
+</html>
