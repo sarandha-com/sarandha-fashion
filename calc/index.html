@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sarandha Calculator</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <form class="section">
+                <h1>Expenses : <span class="expense">0</span></h1>
+                <br />
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">No. of Items</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="qty"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Cost per Item</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="expCost"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Delivery per Item</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="expDelivery"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Total Ads Cost</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="expAds"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1>Revenue : <span class="revenue">0</span></h1>
+                <br />
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Items Sold</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="sold"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Selling Price</label>
+                            <div class="control">
+                                <input
+                                    value="0"
+                                    class="input"
+                                    type="number"
+                                    name="sellprice"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box content has-background-info-dark">
+                    <h1 style="margin: 0" class="">
+                        Total P&L : <span class="pl">0</span>
+                    </h1>
+                </div>
+            </form>
+        </div>
+        <script>
+            Element.prototype.qs = Element.prototype.querySelector;
+            Element.prototype.qsa = Element.prototype.querySelectorAll;
+            window.dqs = (e) => document.querySelector(e);
+            window.dqsa = (e) => document.querySelectorAll(e);
+            let f = dqs("form");
+            f.addEventListener("submit", function (e) {
+                e.preventDefault();
+            });
+
+            f.addEventListener("input", function (e) {
+                let d = Object.fromEntries(new FormData(f));
+                console.log(d);
+                let expense =
+                    parseInt(d.qty) *
+                        (parseInt(d.expCost) + parseInt(d.expDelivery)) +
+                    parseInt(d.expAds);
+
+                let revenue = parseInt(d.sold) * parseInt(d.sellprice);
+                let pl = revenue - expense;
+                dqs(".expense").innerText = expense;
+                dqs(".revenue").innerText = revenue;
+                dqs(".pl").innerText = pl;
+            });
+        </script>
+    </body>
+</html>
