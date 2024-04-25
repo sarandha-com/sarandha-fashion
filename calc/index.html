@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,19 +12,13 @@
     <body>
         <div class="container">
             <form class="section">
-                <h1>Expenses : <span class="expense">0</span></h1>
-                <br />
-                <div class="columns">
+                <h6 class="mb-1">Expenses : <span class="expense">0</span></h6>
+                <div class="columns ml-4">
                     <div class="column">
                         <div class="field">
                             <label class="label">No. of Items</label>
                             <div class="control">
-                                <input
-                                    value="0"
-                                    class="input"
-                                    type="number"
-                                    name="qty"
-                                />
+                                <input class="input" type="number" name="qty" />
                             </div>
                         </div>
                     </div>
@@ -34,7 +27,6 @@
                             <label class="label">Cost per Item</label>
                             <div class="control">
                                 <input
-                                    value="0"
                                     class="input"
                                     type="number"
                                     name="expCost"
@@ -47,7 +39,6 @@
                             <label class="label">Delivery per Item</label>
                             <div class="control">
                                 <input
-                                    value="0"
                                     class="input"
                                     type="number"
                                     name="expDelivery"
@@ -60,7 +51,6 @@
                             <label class="label">Total Ads Cost</label>
                             <div class="control">
                                 <input
-                                    value="0"
                                     class="input"
                                     type="number"
                                     name="expAds"
@@ -69,15 +59,14 @@
                         </div>
                     </div>
                 </div>
-                <h1>Revenue : <span class="revenue">0</span></h1>
-                <br />
-                <div class="columns">
+
+                <h6 class="mb-1">Revenue : <span class="revenue">0</span></h6>
+                <div class="columns ml-2">
                     <div class="column">
                         <div class="field">
                             <label class="label">Items Sold</label>
                             <div class="control">
                                 <input
-                                    value="0"
                                     class="input"
                                     type="number"
                                     name="sold"
@@ -90,7 +79,6 @@
                             <label class="label">Selling Price</label>
                             <div class="control">
                                 <input
-                                    value="0"
                                     class="input"
                                     type="number"
                                     name="sellprice"
@@ -99,11 +87,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="box content has-background-info-dark">
-                    <h1 style="margin: 0" class="">
-                        Total P&L : <span class="pl">0</span>
-                    </h1>
+
+                <h6 class="mb-1">RTO : <span class="rto">0</span></h6>
+                <div class="columns ml-2">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">RTO Items</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="number"
+                                    name="rtoitems"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">RTO Penalty</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="number"
+                                    name="rtopenalty"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <section class="box">
+                    <h1 class="title">Total P&L : <span class="pl">0</span></h1>
+                </section>
             </form>
         </div>
         <script>
@@ -120,14 +135,20 @@
                 let d = Object.fromEntries(new FormData(f));
                 console.log(d);
                 let expense =
-                    parseInt(d.qty) *
-                        (parseInt(d.expCost) + parseInt(d.expDelivery)) +
-                    parseInt(d.expAds);
+                    parseInt(d.qty || 0) *
+                        (parseInt(d.expCost || 0) +
+                            parseInt(d.expDelivery || 0)) +
+                    parseInt(d.expAds || 0);
 
-                let revenue = parseInt(d.sold) * parseInt(d.sellprice);
-                let pl = revenue - expense;
-                dqs(".expense").innerText = expense;
+                let revenue =
+                    parseInt(d.sold || 0) * parseInt(d.sellprice || 0);
+                let rto =
+                    parseInt(d.rtoitems || 0) * parseInt(d.rtopenalty || 0) +
+                    parseInt(d.rtoitems || 0) * parseInt(d.sellprice || 0);
+                let pl = revenue - expense - rto;
+                dqs(".expense").innerText = 0 - expense;
                 dqs(".revenue").innerText = revenue;
+                dqs(".rto").innerText = 0 - rto;
                 dqs(".pl").innerText = pl;
             });
         </script>
